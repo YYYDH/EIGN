@@ -1,4 +1,3 @@
-# %%
 import os
 import pandas as pd
 import numpy as np
@@ -25,7 +24,6 @@ def _cos_sim(x, y):
     return cos_sim
 
 
-# %%
 def one_of_k_encoding(k, possible_values):
     if k not in possible_values:
         raise ValueError(f"{k} is not a valid value in {possible_values}")
@@ -147,7 +145,6 @@ def get_x_and_edge_index(ligand, pocket, x_l, x_p, edge_index_l, edge_index_p, d
     return x, edge_index, node_idx_copy
 
 
-# %%
 def mols2graphs(complex_path, label, save_path, dis_threshold=5.):
     with open(complex_path, 'rb') as f:
         ligand, pocket = pickle.load(f)
@@ -179,7 +176,6 @@ def mols2graphs(complex_path, label, save_path, dis_threshold=5.):
     return data
 
 
-# %%
 class PLIDataLoader(DataLoader):
     def __init__(self, data, **kwargs):
         super().__init__(data, collate_fn=data.collate_fn, **kwargs)
