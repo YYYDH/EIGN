@@ -27,6 +27,7 @@ def generate_pocket(data_dir, distance=5):
         pymol.cmd.save(os.path.join(complex_dir, f'Pocket_{distance}A.pdb'), 'Pocket')
         pymol.cmd.delete('all')
 
+
 def generate_complex(data_dir, data_df, distance=5, input_ligand_format='mol2'):
     pbar = tqdm(total=len(data_df))
     for i, row in data_df.iterrows():
@@ -56,6 +57,7 @@ def generate_complex(data_dir, data_df, distance=5, input_ligand_format='mol2'):
             pickle.dump(complex, f)
 
         pbar.update(1)
+
 
 if __name__ == '__main__':
     distance = 5
