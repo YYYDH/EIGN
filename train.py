@@ -1,4 +1,3 @@
-# %%
 import torch.optim as optim
 import pandas as pd
 import argparse
@@ -13,7 +12,6 @@ from sklearn.metrics import mean_squared_error
 from torch.utils.tensorboard import SummaryWriter
 
 
-# %%
 def val(model, dataloader, device):
     model.eval()
 
@@ -43,7 +41,6 @@ def val(model, dataloader, device):
     return rmse, coff
 
 
-# %%
 if __name__ == '__main__':
     cfg = 'TrainConfig_GIGN'
     config = Config(cfg)
@@ -56,7 +53,7 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()
     parser.add_argument('--cuda', type=str, default='0')
-    parser.add_argument('--set', type=str, default='2020')
+    parser.add_argument('--set', type=str, default='general')
     parser.add_argument('--repeat', type=int, default=3)
     parser.add_argument('--epochs', type=int, default=800)
     argsp = parser.parse_args()
@@ -66,24 +63,21 @@ if __name__ == '__main__':
 
         test2013_dir = os.path.join(data_root, 'test2013')
         test2016_dir = os.path.join(data_root, 'test2016')
-        # test2020_dir = os.path.join(data_root, 'test2020')
 
         test2013_df = pd.read_csv(os.path.join(data_root, 'test2013_195.csv'))
         test2016_df = pd.read_csv(os.path.join(data_root, 'test2016.csv'))
-        # test2020_df = pd.read_csv(os.path.join(data_root, 'test2020.csv'))
 
         test2013_dataset = 'test2013_195'
         test2016_dataset = 'test2016'
-        # test2020_dataset = 'test2020'
 
         if argsp.set == 'general':
-            train_dataset = 'train'
-            valid_dataset = 'valid'
+            train_dataset = 'train_general'
+            valid_dataset = 'valid_general'
 
             train_dir = os.path.join(data_root, 'train_general')
             valid_dir = os.path.join(data_root, 'valid_general')
-            train_df = pd.read_csv(os.path.join(data_root, 'train.csv'))
-            valid_df = pd.read_csv(os.path.join(data_root, 'valid.csv'))
+            train_df = pd.read_csv(os.path.join(data_root, 'train_general.csv'))
+            valid_df = pd.read_csv(os.path.join(data_root, 'valid_general.csv'))
 
         elif argsp.set == 'refined':
             train_dataset = 'train_refined'
@@ -94,32 +88,12 @@ if __name__ == '__main__':
             train_df = pd.read_csv(os.path.join(data_root, 'train_refined.csv'))
             valid_df = pd.read_csv(os.path.join(data_root, 'valid_refined.csv'))
 
-        elif argsp.set == '2019':
-            train_dataset = 'train_2019'
-            valid_dataset = 'valid_2019'
-
-            train_dir = os.path.join(data_root, 'train_2019')
-            valid_dir = os.path.join(data_root, 'valid_2019')
-            train_df = pd.read_csv(os.path.join(data_root, 'train_2019.csv'))
-            valid_df = pd.read_csv(os.path.join(data_root, 'valid_2019.csv'))
-
-        elif argsp.set == '2020':
-            train_dataset = 'train2020full'
-            valid_dataset = 'valid2020'
-
-            train_dir = os.path.join(data_root, 'train_2020_full')
-            valid_dir = os.path.join(data_root, 'valid_2020')
-            train_df = pd.read_csv(os.path.join(data_root, 'train2020full.csv'))
-            valid_df = pd.read_csv(os.path.join(data_root, 'valid2020.csv'))
-
         train_set = GraphDataset(train_dir, train_df, data_root, train_dataset, create=True)
         valid_set = GraphDataset(valid_dir, valid_df, data_root, valid_dataset, create=True)
         test2013_set = GraphDataset(test2013_dir, test2013_df, data_root, test2013_dataset,
                                     create=True)
         test2016_set = GraphDataset(test2016_dir, test2016_df, data_root, test2016_dataset,
                                     create=True)
-        # test2020_set = GraphDataset(test2020_dir, test2020_df, data_root, test2020_dataset,
-        #                             create=True)
 
         train_loader = PLIDataLoader(train_set, batch_size=batch_size, shuffle=True, num_workers=1, pin_memory=True,
                                      persistent_workers=True)
@@ -129,8 +103,6 @@ if __name__ == '__main__':
                                         pin_memory=True, persistent_workers=True)
         test2013_loader = PLIDataLoader(test2013_set, batch_size=batch_size, shuffle=False, num_workers=1,
                                         pin_memory=True, persistent_workers=True)
-        # test2020_loader = PLIDataLoader(test2020_set, batch_size=batch_size, shuffle=False, num_workers=1,
-        #                                 pin_memory=True, persistent_workers=True)
 
         csar_dir = os.path.join(data_root, 'csar')
         csar_dataset = 'csar'
@@ -145,7 +117,6 @@ if __name__ == '__main__':
         logger.info(f"valid data: {len(valid_set)}")
         logger.info(f"test2013 data: {len(test2013_set)}")
         logger.info(f"test2016 data: {len(test2016_set)}")
-        # logger.info(f"test2020 data: {len(test2020_set)}")
 
         device = torch.device('cuda:' + argsp.cuda if torch.cuda.is_available() else "cpu")
 
@@ -217,7 +188,6 @@ if __name__ == '__main__':
         valid_rmse, valid_pr = val(model, valid_loader, device)
         test2013_rmse, test2013_pr = val(model, test2013_loader, device)
         test2016_rmse, test2016_pr = val(model, test2016_loader, device)
-        # test2020_rmse, test2020_pr = val(model, test2020_loader, device)
         csar_rmse, csar_pr = val(model, csar_loader, device)
 
         msg = "valid_rmse-%.4f, valid_pr-%.4f, test2013_rmse-%.4f, test2013_pr-%.4f, test2016_rmse-%.4f, test2016_pr-%.4f, csar_rmse-%.4f, csar_pr-%.4f," \
