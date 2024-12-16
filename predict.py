@@ -10,7 +10,7 @@ from sklearn.metrics import mean_squared_error
 
 
 # %%
-def val(model, dataloader, device, dataset):
+def val(model, dataloader, device):
     model.eval()
 
     pred_list = []
@@ -42,7 +42,6 @@ if __name__ == '__main__':
     save_model = args.get("save_model")
     batch_size = args.get("batch_size")
     data_root = args.get('data_root')
-    early_stop_epoch = args.get("early_stop_epoch")
 
     # valid_dir = os.path.join(data_root, 'valid_general')
     test2013_dir = os.path.join(data_root, 'test2013')
@@ -78,8 +77,8 @@ if __name__ == '__main__':
 
     model.load_state_dict(torch.load('./model/best_model1.pt', map_location=device))
     # valid_rmse, valid_pr = val(model, valid_loader, device, 'valid')
-    test2013_rmse, test2013_pr = val(model, test2013_loader, device, 'test2013')
-    test2016_rmse, test2016_pr = val(model, test2016_loader, device, 'test2016')
+    test2013_rmse, test2013_pr = val(model, test2013_loader, device)
+    test2016_rmse, test2016_pr = val(model, test2016_loader, device)
 
     msg = "test2013_rmse-%.4f, test2013_pr-%.4f, test2016_rmse-%.4f, test2016_pr-%.4f," \
           % (
