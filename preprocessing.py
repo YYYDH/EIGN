@@ -1,4 +1,3 @@
-# %%
 import os
 import pickle
 from rdkit import Chem
@@ -8,7 +7,7 @@ import pymol
 from rdkit import RDLogger
 RDLogger.DisableLog('rdApp.*')
 
-# %%
+
 def generate_pocket(data_dir, distance=5):
     complex_id = os.listdir(data_dir)
     for cid in complex_id:
