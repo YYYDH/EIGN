@@ -1,4 +1,3 @@
-# %%
 import torch.optim as optim
 import pandas as pd
 from EIGN import GIN
@@ -8,8 +7,6 @@ from utils import *
 from sklearn.metrics import mean_squared_error
 
 
-
-# %%
 def val(model, dataloader, device):
     model.eval()
 
@@ -33,7 +30,6 @@ def val(model, dataloader, device):
     return rmse, coff
 
 
-# %%
 if __name__ == '__main__':
     cfg = 'TrainConfig_GIGN'
     config = Config(cfg)
