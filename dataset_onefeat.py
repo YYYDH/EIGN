@@ -300,29 +300,10 @@ def create_compare_graph(data_dir, save_dir, dataset):
 
 
 if __name__ == '__main__':
-    data_root = r'D:\UBUNTU-use\MyPaper\Second\dataset\2019_refined'
-    # toy_dir = os.path.join(r'G:\UBUNTU-use\GIGN\GIGN-main\GIGN\dataset\valid')
-    # toy_df = pd.read_csv(os.path.join(data_root, "valid.csv"))
-    # dataset = 'valid'
-    # toy_dir = os.path.join(r'G:\UBUNTU-use\GIGN\GIGN-main\GIGN\dataset\train')
-    # toy_df = pd.read_csv(os.path.join(data_root, "train.csv"))
-    # dataset = 'train'
-    # toy_dir = os.path.join(r'G:\UBUNTU-use\GIGN\GIGN-main\GIGN\dataset\test2013')
-    # toy_df = pd.read_csv(os.path.join(data_root, "test2013.csv"))
-    # dataset = 'test2013_1'
-    # toy_dir = os.path.join(r'G:\UBUNTU-use\GIGN\GIGN-main\GIGN\dataset\test2016')
-    # toy_df = pd.read_csv(os.path.join(data_root, "test2016.csv"))
-    # dataset = 'test2016'
-    # toy_dir = os.path.join(r'')
-    # toy_df = pd.read_csv(os.path.join(data_root, "test2019.csv"))
-    # dataset = 'test2019'
-    # data_root = './CSAR_NRC_HiQ_Set/'
-    # toy_dir = os.path.join(r'./CSAR_NRC_HiQ_Set/csar')
-    # toy_df = pd.read_csv(os.path.join(data_root, "csar.csv"))
-    # dataset = 'csar'
-    toy_dir = os.path.join(r'D:\UBUNTU-use\MyPaper\Second\dataset\2019_refined\valid')
-    toy_df = pd.read_csv(os.path.join(data_root, "2019_refined_valid.csv"))
-    dataset = 'refined2019valid'
+    data_root = '.dataset'
+    toy_dir = os.path.join('.dataset\train')
+    toy_df = pd.read_csv(os.path.join(data_root, "train.csv"))
+    dataset = 'train'
     toy_set = GraphDataset(toy_dir, toy_df, data_root, dataset, dis_threshold=5, create=True)
     train_loader = PLIDataLoader(toy_set, batch_size=128, shuffle=True, num_workers=4)
     # create_compare_graph(os.path.join(data_root, f"{dataset}.pkl"), data_root, dataset)
