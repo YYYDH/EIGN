@@ -300,8 +300,8 @@ def create_compare_graph(data_dir, save_dir, dataset):
 
 
 if __name__ == '__main__':
-    data_root = '.dataset'
-    toy_dir = os.path.join('.dataset\train')
+    data_root = './dataset'
+    toy_dir = os.path.join('./dataset/train')
     toy_df = pd.read_csv(os.path.join(data_root, "train.csv"))
     dataset = 'train'
     toy_set = GraphDataset(toy_dir, toy_df, data_root, dataset, dis_threshold=5, create=True)
