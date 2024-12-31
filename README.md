@@ -27,3 +27,5 @@ If you want to verify the performance of the model, you can run this command:
 ```shell
 python predict.py
 ```
+
+https://doi.org/10.5281/zenodo.14580983
